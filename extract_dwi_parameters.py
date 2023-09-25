@@ -41,7 +41,7 @@ def create_b_table(m_file):
     # extracting b vectors
     param,zmat,mat=extract_mat(method_text,KEY1).split(")")
     mat=str2array(mat)
-    pattern = r'@(\d+)\*\(0'
+    pattern = r'@(\d+)\*\(0'    #b val 0 vector
     match = re.search(pattern, zmat)
     int(match.group(1))
     mat=np.concatenate([np.zeros(int(match.group(1))),mat])
