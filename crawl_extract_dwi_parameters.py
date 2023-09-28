@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import re
-import os
+import os,glob
 
 KEY1="##$PVM_DwGradVec="
 KEY2="##$PVM_DwEffBval="
@@ -44,7 +44,7 @@ def str2array(mat):
     return np.array(list(mat))
 
 
-def create_b_table(m_file):
+def create_b_table(m_file,out_file):
     with open(m_file) as f:
         method_text = f.readlines()
         method_text="\n".join(method_text)
@@ -64,8 +64,20 @@ def create_b_table(m_file):
     d["b"]=mat
 
     d=d[["b","bx","by","bz"]]
-    d.to_csv(os.path.join(os.path.dirname(m_file),"b_table.txt"), 
+    d.to_csv(out_file, 
             index = False)
 
-m_file=r"V:\MRI_analysis\minori-DTI\20230814_084507_Yagishita_Sharapova_20230814_hf3_s2_icr_1_18\method"
-create_b_table(m_file)
+
+
+prj_dir=r"V:\MRI_analysis\minori-DTI"
+for m in glob.glob(os.path.join(prj_dir,"2*")):
+    print(m)
+    m_file=os.path.join(m,"method")
+    out_file=os.path.join(m,"b_table.txt")
+    if not os.path.exists(m_file):
+        print("method file does not exist")
+        continue
+    if os.path.exists(out_file):
+        print("Already processed")
+        continue
+    create_b_table(m_file,out_file)
