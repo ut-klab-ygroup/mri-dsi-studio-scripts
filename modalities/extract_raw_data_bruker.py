@@ -101,7 +101,8 @@ def create_and_process_dti_dirs(root_dir, output_dir):
     """
     config = load_config(section='preprocessing')
     condition = config.get('condition', 'default_condition')
-    preprocessing_dir = os.path.join(output_dir, condition, 'preprocessing')
+    # preprocessing_dir = os.path.join(output_dir, condition, 'preprocessing')
+    preprocessing_dir = os.path.join(output_dir, condition, 'DTI', 'preprocessing')
     os.makedirs(preprocessing_dir, exist_ok=True)
     
     dti_dirs = find_dti_directories(root_dir)
