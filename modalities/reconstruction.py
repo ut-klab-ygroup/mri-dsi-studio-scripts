@@ -33,6 +33,9 @@ def process_src_files(root_dir):
                 src_file_path = os.path.join(subdir, file)
                 file_dir = os.path.dirname(src_file_path)
                 base_name = os.path.basename(src_file_path).replace('.src.gz', '')
+
+                # TODO: add parameters to find phase encoded image and run topup/eddy correction
+                # TODO: if there is no phase encoded durring scan acquisition only run EDDY correction
                 
                 # before this step please check rotation of sample and check to adjust [Step T2][Edit][Image flip z]+[Step T2a][Remove Background] - based on current rotation fliping on Z axis is enought
                 command = f'dsi_studio --action=rec --source="{src_file_path}" --method=1 --param0=0.6 --cmd="[Step T2][Edit][Image flip z]+[Step T2a][Remove Background]" --check_btable=1 --record_odf=1'
