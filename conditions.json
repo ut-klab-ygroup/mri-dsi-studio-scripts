@@ -1,6 +1,6 @@
 {
     "preprocessing": {
-      "condition": "Cuprizone"
+      "project": "Cuprizone"
     },
     "statistical_conditions": {
         "group_higher_fa": "Control",
