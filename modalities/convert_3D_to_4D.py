@@ -50,9 +50,9 @@ def process_subject_folder(folder_path):
     output_filename = os.path.join(folder_path, f'{subject_name}_4D.nii')
     nib.save(new_img, output_filename)
 
-base_directory = '../test_DSI'
+# base_directory = '../test_DSI'
 
-for subject_folder in os.listdir(base_directory):
-    folder_path = os.path.join(base_directory, subject_folder)
-    if os.path.isdir(folder_path):
-        process_subject_folder(folder_path)
+# for subject_folder in os.listdir(base_directory):
+#     folder_path = os.path.join(base_directory, subject_folder)
+#     if os.path.isdir(folder_path):
+#         process_subject_folder(folder_path)
