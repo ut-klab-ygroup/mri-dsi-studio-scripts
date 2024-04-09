@@ -30,4 +30,7 @@ if __name__ == "__main__":
 
     # Step 3: DB creation
     create_dsi_database(args.output_dir)
+
+    # Step 4: Run statistical analysis
+    # run_statistical_analysis(args.output_dir)
     
