@@ -1,6 +1,6 @@
 # For Windows 10 and Windows 11:
 
-To run DSI Studio from anywhere in Windows by just typing dsi_studio, you'll need to add the directory containing dsi_studio.exe to your system's PATH environment variable. The PATH variable helps Windows locate executables from the command line without needing to specify the full path.
+To run DSI Studio from anywhere in Windows by just typing `dsi_studio`, you'll need to add the directory containing `dsi_studio.exe` to your system's PATH environment variable. The PATH variable helps Windows locate executables from the command line without needing to specify the full path.
 
 ## Open System Properties:
 

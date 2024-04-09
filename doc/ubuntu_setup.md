@@ -101,7 +101,7 @@ Navigate to the directory containing the DSI Studio executable and run it:
 
 https://www.nemotos.net/?p=1878
 
-
+```
 .
 ├── conditions.json                     # contains setup for the project such as name and condition for stat analysis
 ├── doc
@@ -119,3 +119,4 @@ https://www.nemotos.net/?p=1878
         └── utils.py                    # helper function for loading condition based on conditions.json file
 
 6 directories, 19 files
+```
