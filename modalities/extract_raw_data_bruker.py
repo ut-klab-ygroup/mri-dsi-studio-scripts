@@ -77,7 +77,7 @@ def find_dti_directories(root_dir):
         if 'method' in files:
             with open(os.path.join(subdir, 'method'), 'r') as f:
                 content = f.read()
-                if "DTI" in content or "DtiEpi" in content:
+                if "DTI" in content or "DtiEpi" in content or 'DtiStandard' in content:
                     dti_dirs.append(subdir)
     return dti_dirs
 
