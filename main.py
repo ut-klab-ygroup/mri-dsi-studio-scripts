@@ -26,10 +26,10 @@ if __name__ == "__main__":
     create_and_process_dti_dirs(args.input_dir, args.output_dir)
 
     # Step 2: Reconstruction process on processed src files
-    process_src_files(args.output_dir)  # after create_and_process_dti_dirs .src.gz files should be part of output_dir
+    # process_src_files(args.output_dir)  # after create_and_process_dti_dirs .src.gz files should be part of output_dir
 
     # Step 3: DB creation
-    create_dsi_database(args.output_dir)
+    # create_dsi_database(args.output_dir)
 
     # Step 4: Run statistical analysis
     # run_statistical_analysis(args.output_dir)
