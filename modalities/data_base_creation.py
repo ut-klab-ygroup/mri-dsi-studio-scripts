@@ -10,6 +10,7 @@ import glob
 import os
 import shutil
 import subprocess
+from datetime import datetime 
 
 def create_dsi_database(output_dir, database_dir_name="data_base"):
     """
@@ -28,7 +29,6 @@ def create_dsi_database(output_dir, database_dir_name="data_base"):
     
     """
     dti_base_dir = os.path.dirname(output_dir)  # This will navigate up from 'preprocessing' to 'DTI'
-
     database_dir = os.path.join(dti_base_dir, database_dir_name)  # Create the database directory parallel to 'preprocessing'
     os.makedirs(database_dir, exist_ok=True)
 
@@ -47,9 +47,12 @@ def create_dsi_database(output_dir, database_dir_name="data_base"):
         dst_path = os.path.join(database_dir, os.path.basename(src_path))
         shutil.copy(src_path, dst_path)
         print(f"Copied {src_path} to {dst_path}")
+        
+    current_date = datetime.now().strftime('%Y%m%d')
 
     # DSI Studio command
-    dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --template=1 --index_name=fa'
+    # dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --template=1 --index_name=fa'
+    dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --output="{database_dir}/data_base_{current_date}.fib.gz" --template=1 --index_name=fa'
     
     try:
         subprocess.run(dsi_studio_cmd, shell=True, check=True)
