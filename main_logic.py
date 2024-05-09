@@ -1,8 +1,11 @@
 import os
+import csv
+
 from modalities.extract_raw_data_bruker import create_and_process_dti_dirs
 from modalities.utilities.utils import list_projects, select_project
 from modalities.reconstruction import process_src_files
 from modalities.data_base_creation import create_dsi_database
+from modalities.statistical_analysis import run_statistical_analysis
 
 
 if __name__ == "__main__":
@@ -38,8 +41,12 @@ if __name__ == "__main__":
                 # STEP C1: Creating database after 
                 print("Starting the creation of the DSI Studio database...")
                 create_dsi_database(project_output_dir)
+
+                # # STEP C1: Creating database after 
+                # print("Starting the creation of the DSI Studio database...")
+                # run_statistical_analysis(project_output_dir)
                 
-                print("Processing completed.")
+                print("Processing completed. Please open database in DSI Studio to check if there is any artifacts or missregistration to remove some subjects!")
         else:
             print("No valid project selected, exiting.")
     else:
