@@ -52,7 +52,7 @@ def create_dsi_database(output_dir, database_dir_name="data_base"):
 
     # DSI Studio command
     # dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --template=1 --index_name=fa'
-    dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --output="{database_dir}/data_base_{current_date}.fib.gz" --template=1 --index_name=fa'
+    dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --output="{database_dir}/data_base_{current_date}.fa.db.fib.gz" --template=1 --index_name=fa'
     
     try:
         subprocess.run(dsi_studio_cmd, shell=True, check=True)
