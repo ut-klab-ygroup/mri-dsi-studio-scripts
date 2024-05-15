@@ -38,7 +38,7 @@ def process_src_files(root_dir):
                 # TODO: if there is no phase encoded durring scan acquisition only run EDDY correction
                 
                 # before this step please check rotation of sample and check to adjust [Step T2][Edit][Image flip z]+[Step T2a][Remove Background] - based on current rotation fliping on Z axis is enought
-                command = f'dsi_studio --action=rec --source="{src_file_path}" --method=1 --param0=0.6 --cmd="[Step T2][Edit][Image flip z]+[Step T2a][Remove Background]" --check_btable=1 --record_odf=1'
+                command = f'dsi_studio --action=rec --source="{src_file_path}" --method=1 --param0=0.6 --cmd="[Step T2a][Remove Background]" --check_btable=1 --record_odf=1'
     
                 try:
                     subprocess.run(command, shell=True, check=True)
