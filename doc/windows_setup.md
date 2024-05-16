@@ -10,7 +10,7 @@ To run DSI Studio from anywhere in Windows by just typing `dsi_studio`, you'll n
 
 ## Edit the PATH Environment Variable:
 
-- In the Environment Variables window, look for the Path variable under the "System variables" section (for all users) or the "User variables for [your username]" section (for the current user only). Select it and then click on Edit.
+- In the Environment Variables window, search for the Path variable under the "System variables" section (for all users) or the "User variables for [your username]" section (for the current user only). Select it and then click on Edit.
 - In the Edit Environment Variable window, click on New and paste the path to the directory where dsi_studio.exe is located. Based on your provided path, this would be:
 
 #### Path example to the dsi studio:
