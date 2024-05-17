@@ -36,18 +36,17 @@ def extract_subject_name(subject_file_path):
             in angle brackets ('<', '>') and prefixed with a specific pattern ('##$SUBJECT_study_name=').
             This format is required to get information inside the `subject` file from Bruker 11.7.
     """
-    subject_name = None
     try:
         with open(subject_file_path, 'r') as file:
             content = file.read()
-            match = re.search(r'##\$SUBJECT_study_name=\(\s*\d+\s*\)\s*<([^>]+)>', content, re.MULTILINE)
+            match = re.search(r'##\$SUBJECT_study_name=\(\s*\d+\s*\)\s*<([^>]+)>', content, re.MULTILINE) # re to find the study name following the Bruker format
             if match:
-                # subject_name = match.group(1).replace('-', '_')
-                extracted_name = match.group(1)
-                subject_name = extracted_name.replace('-', '_') if '_' not in extracted_name else extracted_name
+                return re.sub(r'\W+', '_', match.group(1)) # replace non-alphanumeric characters in the name with underscores (_)
+    except IOError as e:
+        print(f"Unable to read file {subject_file_path}: {e}")
     except Exception as e:
-        print(f"Error reading {subject_file_path}: {e}")
-    return subject_name
+        print(f"An error occurred: {e}")
+    return None
 
 
 def find_dti_directories(root_dir):
