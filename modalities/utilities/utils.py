@@ -64,6 +64,80 @@ def select_project(projects):
     else:
         print("Invalid selection.")
         return None
+    
+
+
+# function that is added colors user output when scritp is running
+def style_text(text, color='white', bold=False):
+    """
+    Applies ANSI color and optional bold formatting to the text.
+
+        Args:
+            text (str): The text to be styled.
+            color (str): The color of the text ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white').
+            bold (bool): If True, makes the text bold.
+
+        Returns:
+            str: The styled text with ANSI escape codes.
+    """
+    colors = {
+        'red': '\033[31m',
+        'green': '\033[32m',
+        'yellow': '\033[33m',
+        'blue': '\033[34m',
+        'magenta': '\033[35m',
+        'cyan': '\033[36m',
+        'white': '\033[37m'
+    }
+    reset = '\033[0m'
+    color_code = colors.get(color, '\033[37m')
+    bold_code = '\033[1m' if bold else ''
+    return f"{bold_code}{color_code}{text}{reset}"
+
+
+
+def select_file(files):
+    """
+    Prompt the user to select a file from a list of multiple files.
+
+        Parameters:
+            files (list): A list of file paths.
+
+        Returns:
+            str: The selected file path if a valid selection is made, otherwise None.
+    """
+
+    print("Multiple files found:")
+    for i, file in enumerate(files, start=1):
+        print(f"{i}: {file}")
+    
+    choice = input("Please select a file by entering the corresponding number: ")
+    try:
+        index = int(choice) - 1
+        if 0 <= index < len(files):
+            return files[index]
+        else:
+            print("Invalid selection. Exiting.")
+            return None
+    except ValueError:
+        print("Invalid input. Exiting.")
+        return None
+    
+
+def get_user_confirmation():
+    """
+    Prompt the user to confirm if the original demographics.csv file was modified after removing subjects.
+
+        Returns:
+            str: 'yes' if the user confirms the modification, 'no' otherwise.
+    """
+
+    while True:
+        answer = input("If you removed subjects after quality check and saved a new version of the database, did you modify the original demographics.csv? (yes/no): ").strip().lower()
+        if answer in ["yes", "no"]:
+            return answer
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
 
 
 
