@@ -1,80 +1,84 @@
 import os
+import pandas as pd
+import numpy as np
 import shutil
 import glob
 import subprocess
+from bs4 import BeautifulSoup
 
-def run_statistical_analysis(base_output_dir):
+
+def parse_demographics(file_path):
     """
-    Automatically finds the .fa.db.fib.gz files in the data_base directory,
-    copies them to a new directory for statistical analysis, and runs the analysis.
+    Parse the demographics file to generate comparison pairs based on unique conditions.
     
     Parameters:
-    - base_output_dir (str): The base output directory where the DTI directory is located.
+        file_path (str): Path to the demographics file.
+        
+    Returns:
+        list: A list of comparison pairs in the format 'Group1_vs_Group2' & 'Group2_vs_Group1'.
     """
-    database_dir = os.path.join(base_output_dir, "DTI", "data_base")
-    statistical_analysis_dir = os.path.join(base_output_dir, "statistical_analysis")
+
+    df = pd.read_csv(file_path)
+    comparisons = []
+    unique_groups = df['conditions'].unique()
+    for i, group1 in enumerate(unique_groups):
+        for group2 in unique_groups[i+1:]:
+            comparisons.append(f"{group1}_vs_{group2}")
+            comparisons.append(f"{group2}_vs_{group1}")
+    return comparisons
+
+
+def update_html_report(comp_dir, group1, group2):
+    html_file = os.path.join(comp_dir, 'group_analysis.html')
+    if os.path.exists(html_file):
+        with open(html_file, 'r', encoding='utf-8') as file:
+            soup = BeautifulSoup(file, 'html.parser')
+
+        # Update the condition names in the relevant sections
+        for tag in soup.find_all('h3'):
+            if 'Tracks with higher FA in dsi_conditions 1' in tag.text:
+                tag.string = f'Tracks with higher FA in {group1}'
+            elif 'Tracks with higher FA in dsi_conditions 0' in tag.text:
+                tag.string = f'Tracks with higher FA in {group2}'
+
+        for tag in soup.find_all('p'):
+            if 'The connectometry analysis found tracts showing higher FA in dsi_conditions 1' in tag.text:
+                tag.string = tag.text.replace('dsi_conditions 1', group1)
+            elif 'The connectometry analysis found tracts showing higher FA in dsi_conditions 0' in tag.text:
+                tag.string = tag.text.replace('dsi_conditions 0', group2)
+
+        with open(html_file, 'w', encoding='utf-8') as file:
+            file.write(str(soup))
+
+
+def create_statistical_analysis_structure(base_dir, project_name, comparisons):
+    statistical_analysis_dir = os.path.join(base_dir, project_name, "DTI", "statistical_analysis")
     
-    os.makedirs(statistical_analysis_dir, exist_ok=True)
-
-    fib_files = glob.glob(os.path.join(database_dir, "*.fa.db.fib.gz"))
-    if not fib_files:
-        print("No .fa.db.fib.gz files found in the database directory.")
-        return
+    for comparison in comparisons:
+        comparison_dir = os.path.join(statistical_analysis_dir, comparison)
+        os.makedirs(comparison_dir, exist_ok=True)
     
-    # Copy all .fa.db.fib.gz files to the new directory
-    for db_fib_file in fib_files:
-        shutil.copy(db_fib_file, statistical_analysis_dir)
-        print(f"Copied {db_fib_file} to {statistical_analysis_dir}")
+    return statistical_analysis_dir
 
-    participants_file = os.path.join(base_output_dir, "samples_data.csv")
-    source_file = os.path.join(statistical_analysis_dir, os.path.basename(fib_files[-1]))
-
-    command = f'dsi_studio --action=cnt --source="{source_file}" --demo="{participants_file}" --variable_list=0 --voi=0 --t_threshold=2 --length_threshold=16 --output="{output_dir}"'
-
-    try:
-        subprocess.run(command, shell=True, check=True)
-        print("Statistical analysis completed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error during statistical analysis: {e}")
-
-
-
-
-
-"""
-original command
-"""
-
-# def run_statistical_analysis(output_dir):
-#     """
-#     Automatically finds the .fa.db.fib.gz file in the data_base directory,
-#     copies it to a new directory for statistical analysis, and runs the analysis.
+def copy_files_and_update_demographics(source_file, demographics_file, statistical_analysis_dir, comparisons):
+    df = pd.read_csv(demographics_file)
     
-#     Parameters:
-#     - output_dir (str): The base output directory where DTI and data_base directories are located.
-#     """
-#     database_dir = os.path.join(output_dir, "DTI", "data_base")
-#     statistical_analysis_dir = os.path.join(output_dir, "DTI", "statistical_analysis") # creating new dir called statistical_analysis
-    
-#     os.makedirs(statistical_analysis_dir, exist_ok=True)
-    
-#     db_fib_file = next(glob.glob(os.path.join(database_dir, "*.fa.db.fib.gz")), None) # looking for .fa.db.fib.gz
-#     if db_fib_file is None:
-#         print("No .fa.db.fib.gz file found in the database directory.")
-#         return
+    for comparison in comparisons:
+        comp_dir = os.path.join(statistical_analysis_dir, comparison)
+        shutil.copy(source_file, comp_dir)
+        
+        group1, group2 = comparison.split('_vs_')
+        
+        df['dsi_conditions'] = np.where(df['conditions'] == group1, 1, np.where(df['conditions'] == group2, 0, df['conditions']))
+        comparison_demographics_file = os.path.join(comp_dir, "demographics.csv")
+        df.to_csv(comparison_demographics_file, index=False)
 
-#     shutil.copy(db_fib_file, statistical_analysis_dir)
-#     print(f"Copied {db_fib_file} to {statistical_analysis_dir}")
-    
-#     # preparing the DSI Studio command
-#     source_file = os.path.join(statistical_analysis_dir, os.path.basename(db_fib_file))
-#     participants_file = os.path.join(output_dir, "participants_test.tsv")
-#     output_dir = os.path.join(statistical_analysis_dir, "group_analysis")
+        # running analysis 
 
-#     command = f'dsi_studio --action=cnt --source="{source_file}" --demo="{participants_file}" --variable_list=0 --voi=0 --t_threshold=2 --length_threshold=16 --output="{output_dir}"'
-    
-#     try:
-#         subprocess.run(command, shell=True, check=True)
-#         print("Statistical analysis completed successfully.")
-#     except subprocess.CalledProcessError as e:
-#         print(f"Error during statistical analysis: {e}")
+        comparison_source_file = os.path.join(comp_dir, os.path.basename(source_file))
+        analysis_command = f"dsi_studio --action=cnt --source={comparison_source_file} --demo={comparison_demographics_file} --variable_list=2 --voi=2 --t_threshold=2 --fdr_threshold=0.05 --length_threshold=16 --output={os.path.join(comp_dir, 'group_analysis')} --no_tractogram=0"
+        subprocess.run(analysis_command, shell=True, check=True)
+
+        update_html_report(comp_dir, group1, group2)
+
+
