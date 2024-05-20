@@ -1,5 +1,6 @@
 import os
 import csv
+from colorama import init, Fore, Style
 
 from modalities.extract_raw_data_bruker import create_and_process_dti_dirs
 from modalities.utilities.utils import list_projects, select_project
@@ -22,33 +23,33 @@ if __name__ == "__main__":
             project_input_dir = os.path.join(input_dir, selected_project)
 
             if not any(os.listdir(project_input_dir)):
-                print(f"The project directory '{selected_project}' is empty. Please add raw data from Paravision 360 to perform analysis.")
+                print(Fore.RED + Style.BRIGHT + f"The project directory '{selected_project}' is empty. Please add raw data from Paravision 360 to perform analysis." + Style.RESET_ALL)
             else:
 
                 project_output_dir = os.path.join(output_dir, selected_project, 'DTI', 'preprocessing')
                 os.makedirs(project_output_dir, exist_ok=True)
-                print(f"Processing data for project {selected_project}...")
+                print(Fore.GREEN+ Style.BRIGHT + f"Processing data for project {selected_project}..." + Style.RESET_ALL )
                 
                 # STEP T1: Data extraction and preparation
                 create_and_process_dti_dirs(project_input_dir, project_output_dir)
                 
                 # STEP T2: Reconstruction process
-                print("Starting the reconstruction of .src.gz files...")
+                print(Fore.GREEN + Style.BRIGHT + "Starting the reconstruction of .src.gz files..." + Style.RESET_ALL)
                 reconstruction_message = process_src_files(project_output_dir)
                 print(reconstruction_message)
 
                 # STEP C1: Creating database after 
-                print("Starting the creation of the DSI Studio database...")
+                print(Fore.GREEN + Style.BRIGHT + "Starting the creation of the DSI Studio database..." + Style.RESET_ALL)
                 create_dsi_database(project_output_dir)
 
                 # # STEP C1: Creating database after 
                 # print("Starting the creation of the DSI Studio database...")
                 # run_statistical_analysis(project_output_dir)
                 
-                print("Processing completed. Please open database in DSI Studio to check if there is any artifacts or missregistration to remove some subjects!")
+                print(Fore.GREEN + Style.BRIGHT + "Processing completed. Please open database in DSI Studio to check if there is any artifacts or missregistration to remove some subjects!" + Style.RESET_ALL)
         else:
-            print("No valid project selected, exiting.")
+            print(Fore.RED + Style.BRIGHT + "No valid project selected, exiting." + Style.RESET_ALL)
     else:
-        print("No projects found, please check the input directory.")
+        print(Fore.RED + Style.BRIGHT + "No projects found, please check the input directory." + Style.RESET_ALL)
 
 
