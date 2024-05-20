@@ -29,7 +29,7 @@ def parse_demographics(file_path):
 
 
 def update_html_report(comp_dir, group1, group2):
-    html_file = os.path.join(comp_dir, 'group_analysis.html')
+    html_file = os.path.join(comp_dir, 'group_analysis.report.html')
     if os.path.exists(html_file):
         with open(html_file, 'r', encoding='utf-8') as file:
             soup = BeautifulSoup(file, 'html.parser')
@@ -41,11 +41,11 @@ def update_html_report(comp_dir, group1, group2):
             elif 'Tracks with higher FA in dsi_conditions 0' in tag.text:
                 tag.string = f'Tracks with higher FA in {group2}'
 
-        for tag in soup.find_all('p'):
-            if 'The connectometry analysis found tracts showing higher FA in dsi_conditions 1' in tag.text:
-                tag.string = tag.text.replace('dsi_conditions 1', group1)
-            elif 'The connectometry analysis found tracts showing higher FA in dsi_conditions 0' in tag.text:
-                tag.string = tag.text.replace('dsi_conditions 0', group2)
+        # for tag in soup.find_all('p'):
+        #     if 'The connectometry analysis found tracts showing higher FA in dsi_conditions 1' in tag.text:
+        #         tag.string = tag.text.replace('dsi_conditions 1', group1)
+        #     elif 'The connectometry analysis found tracts showing higher FA in dsi_conditions 0' in tag.text:
+        #         tag.string = tag.text.replace('dsi_conditions 0', group2)
 
         with open(html_file, 'w', encoding='utf-8') as file:
             file.write(str(soup))
