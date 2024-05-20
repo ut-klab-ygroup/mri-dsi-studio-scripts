@@ -1,8 +1,11 @@
 import os
 import glob
+import pandas as pd
+import numpy as np
+from colorama import init, Fore, Style
 
-from modalities.utilities.utils import list_projects, select_project, select_file
-from modalities.statistical_analysis_pipline import create_statistical_analysis_structure, get_user_confirmation
+from modalities.utilities.utils import list_projects, select_project, select_file, get_user_confirmation
+from modalities.statistical_analysis_pipline import create_statistical_analysis_structure, parse_demographics, copy_files_and_update_demographics
 
 
 if __name__ == "__main__":
@@ -17,26 +20,33 @@ if __name__ == "__main__":
             project_input_dir = os.path.join(working_dir, selected_project)
 
             if not any(os.listdir(project_input_dir)):
-                print(f"The project directory '{selected_project}' is empty. Please add raw data from Paravision 360 to perform analysis.")
+                print(Fore.RED + Style.BRIGHT + f"The project directory '{selected_project}' is empty. Please add raw data from Paravision 360 to perform analysis." + Style.RESET_ALL)
             else:
                 data_base_dir = os.path.join(project_input_dir, "DTI", "data_base") # checking for presence of data_base
                 demographics_file = os.path.join(project_input_dir, "DTI", "demographics.csv") # checking for presence of demographics.csv
 
 
                 if not os.path.exists(data_base_dir):
-                    print(f"The 'data_base' directory does not exist in '{project_input_dir}'.")
+                    print(Fore.RED + Style.BRIGHT +f"The 'data_base' directory does not exist in '{project_input_dir}'." + Style.RESET_ALL)
                 elif not os.path.exists(demographics_file):
-                    print(f"The 'demographics.csv' file does not exist in '{project_input_dir}'.")
+                    print(Fore.RED + Style.BRIGHT + f"The 'demographics.csv' file does not exist in '{project_input_dir}'." + Style.RESET_ALL)
                 else:
-                    source_files = glob.glob(os.path.join(data_base_dir, "*.fa.db.fib.gz"))            
-                    if not source_files:
-                        print(f"No source file found in '{data_base_dir}'.")
-                    elif len(source_files) > 1:
-                        source_file = select_file(source_files)
-                        if not source_file:
-                            exit(1) 
+                    user_confirmation = get_user_confirmation()
+                    if user_confirmation == "no":
+                            print(Fore.RED + Style.BRIGHT + "Please amend the demographics.csv file to reflect the changes and try again." + Style.RESET_ALL)
                     else:
-                        source_file = source_files[0]
+                        source_files = glob.glob(os.path.join(data_base_dir, "*.fa.db.fib.gz"))            
+                        if not source_files:
+                            print( Fore.RED + Style.BRIGHT + f"No source file found in '{data_base_dir}'." + Style.RESET_ALL)
+                        elif len(source_files) > 1:
+                            source_file = select_file(source_files)
+                            if not source_file:
+                                exit(1) 
+                        else:
+                            source_file = source_files[0]
 
-                    if source_file:
-                        statistical_analysis_dir = create_statistical_analysis_structure(working_dir, selected_project)
+                        if source_file:
+                            comparisons = parse_demographics(demographics_file) # demographics creates folders based on 'conditons' column
+                            statistical_analysis_dir = create_statistical_analysis_structure(working_dir, selected_project, comparisons)
+
+                            copy_files_and_update_demographics(source_file, demographics_file, statistical_analysis_dir, comparisons)
