@@ -50,3 +50,5 @@ if __name__ == "__main__":
                             statistical_analysis_dir = create_statistical_analysis_structure(working_dir, selected_project, comparisons)
 
                             copy_files_and_update_demographics(source_file, demographics_file, statistical_analysis_dir, comparisons)
+
+                            print(Fore.GREEN + Style.BRIGHT + f"Completed! Results are stored in '{statistical_analysis_dir}'" + Style.RESET_ALL)
