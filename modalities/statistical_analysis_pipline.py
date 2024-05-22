@@ -29,6 +29,18 @@ def parse_demographics(file_path):
 
 
 def update_html_report(comp_dir, group1, group2):
+    """
+    Dsi Studio generates statistical analysis report in HTML format. The problem is that it displays numerical conditions based on the .csv file. 
+    Existing functiion updates the HTML report with the specified condition names from parse_demographics() function
+
+    Parameters:
+        comp_dir (str): The directory containing the HTML report.
+        group1 (str): The name of the first condition.
+        group2 (str): The name of the second condition.
+
+    The function reads the HTML report, updates the condition names in the relevant sections, and writes the modified content back to the file.
+    """
+    
     html_file = os.path.join(comp_dir, 'group_analysis.report.html')
     if os.path.exists(html_file):
         with open(html_file, 'r', encoding='utf-8') as file:
@@ -52,6 +64,21 @@ def update_html_report(comp_dir, group1, group2):
 
 
 def create_statistical_analysis_structure(base_dir, project_name, comparisons):
+    """
+    Create the directory structure for statistical analysis based on the given comparisons.
+
+    Parameters:
+        base_dir (str): The base directory where the project is located.
+        project_name (str): The name of the project for which the analysis structure is being created.
+        comparisons (list): A list of comparison strings, each representing a condition comparison (e.g., 'GH_vs_SI').
+
+    Returns:
+        str: The path to the created 'statistical_analysis' directory.
+
+    The function creates a 'statistical_analysis' directory under the specified project's DTI directory.
+    Within this directory, it creates subdirectories for each comparison in the comparisons list.
+    """
+
     statistical_analysis_dir = os.path.join(base_dir, project_name, "DTI", "statistical_analysis")
     
     for comparison in comparisons:
