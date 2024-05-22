@@ -1,9 +1,0 @@
-{
-    "preprocessing": {
-      "project": "Pr3-1-2"
-    },
-    "statistical_conditions": {
-        "group_higher_fa": "Control",
-        "group_lower_fa": "Cuprizone_9w"
-    }
-}
