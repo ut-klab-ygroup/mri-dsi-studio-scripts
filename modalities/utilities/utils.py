@@ -41,7 +41,8 @@ def list_projects(input_dir):
             - list: A list of subdirectory names, or an empty list if an error occurs.
     """
     try:
-        return [d for d in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, d))]
+        dir_list=[d for d in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, d))]
+        return list(filter(lambda x:not os.path.basename(x).startswith("_"),dir_list))
     except OSError as e:
         print(f"Error accessing directory {input_dir}: {e}")
         return []

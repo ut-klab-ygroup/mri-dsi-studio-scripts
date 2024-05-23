@@ -9,8 +9,8 @@ from modalities.data_base_creation import create_dsi_database
 
 
 if __name__ == "__main__":
-    input_dir = "/home/sharapova/raw"
-    output_dir = "/home/sharapova/raw_analysis"
+    input_dir = "V:\MRI_rawdata"
+    output_dir = "V:\MRI_analysis"
 
     # function listing all directories within input folder (input folder expected to have only raw data under the specified project name)
     projects = list_projects(input_dir)
