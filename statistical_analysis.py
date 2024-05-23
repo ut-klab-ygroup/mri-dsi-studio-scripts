@@ -26,7 +26,7 @@ if __name__ == "__main__":
                 demographics_file = os.path.join(project_input_dir, "DTI", "demographics.csv") # checking for presence of demographics.csv
 
                 if not os.path.exists(data_base_dir):
-                    print(Fore.RED + Style.BRIGHT +f"The 'data_base' directory does not exist in '{project_input_dir}'." + Style.RESET_ALL)
+                    print(Fore.RED + Style.BRIGHT + f"The 'data_base' directory does not exist in '{project_input_dir}'." + Style.RESET_ALL)
                 elif not os.path.exists(demographics_file):
                     print(Fore.RED + Style.BRIGHT + f"The 'demographics.csv' file does not exist in '{project_input_dir}'." + Style.RESET_ALL)
                 else:
