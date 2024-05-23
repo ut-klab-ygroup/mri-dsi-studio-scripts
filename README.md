@@ -3,7 +3,12 @@
 # Setup
 * [Ubuntu](./doc/ubuntu_setup.md)
 * [Windows](./doc/windows_setup.md)
-#
+
+
+
+
+
+
 ```
 .
 ├── conditions.json                     # contains setup for the project such as name and condition for stat analysis

@@ -1,7 +1,7 @@
 import os
 import re
 import numpy as np
-import nibabel as nib
+# import nibabel as nib
 
 
 def sort_nii_files(files):
