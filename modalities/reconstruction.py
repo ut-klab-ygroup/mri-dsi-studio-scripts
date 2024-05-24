@@ -42,8 +42,8 @@ def process_src_files(root_dir):
     
                 try:
                     subprocess.run(command, shell=True, check=True)
-                    print(f"Processing completed for {base_name}")
+                    print(f"Reconstrunction process completed for {base_name}")
                 except subprocess.CalledProcessError as e:
                     print(f"Error processing {base_name}: {e}")
-    return 'Recostruction completed!'
+    return 'Recostruction process completed!'
 
