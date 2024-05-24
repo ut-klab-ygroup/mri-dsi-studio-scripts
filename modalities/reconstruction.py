@@ -42,8 +42,8 @@ def process_src_files(root_dir):
     
                 try:
                     subprocess.run(command, shell=True, check=True)
-                    print(f"Reconstrunction process completed for {base_name}")
+                    print(Fore.GREEN + Style.BRIGHT + f"Reconstrunction process completed for {base_name}" + Style.RESET_ALL)
                 except subprocess.CalledProcessError as e:
-                    print(f"Error processing {base_name}: {e}")
-    return 'Recostruction process completed!'
+                    print(Fore.RED + Style.BRIGHT + f"Error processing {base_name}: {e}" + Style.RESET_ALL)
+    return Fore.RED + Style.BRIGHT + 'Recostruction process completed!' + Style.RESET_ALL
 
