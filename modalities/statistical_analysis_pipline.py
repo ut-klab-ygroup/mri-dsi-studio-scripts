@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from weasyprint import HTML
 
 
-def parse_demographics(file_path):
+def parse_demographics(file_path): # add condition for M and F
     """
     Parse the demographics file to generate comparison pairs based on unique conditions.
     
@@ -18,7 +18,6 @@ def parse_demographics(file_path):
     Returns:
         list: A list of comparison pairs in the format 'Group1_vs_Group2' & 'Group2_vs_Group1'.
     """
-
     df = pd.read_csv(file_path)
     comparisons = []
     unique_groups = df['conditions'].unique()
@@ -103,7 +102,6 @@ def create_statistical_analysis_structure(base_dir, project_name, comparisons):
     """
 
     statistical_analysis_dir = os.path.join(base_dir, project_name, "DTI", "statistical_analysis")
-    
     for comparison in comparisons:
         comparison_dir = os.path.join(statistical_analysis_dir, comparison)
         os.makedirs(comparison_dir, exist_ok=True)
@@ -120,11 +118,10 @@ def copy_files_and_update_demographics(source_file, demographics_file, statistic
         group1, group2 = comparison.split('_vs_')
         
         df['dsi_conditions'] = np.where(df['conditions'] == group1, 1, np.where(df['conditions'] == group2, 0, df['conditions']))
-        comparison_demographics_file = os.path.join(comp_dir, "demographics.csv")
+        comparison_demographics_file = os.path.join(comp_dir, "demographics.csv") # change a name based on the folder where it will be saved ddemographics_vs_.csv
         df.to_csv(comparison_demographics_file, index=False)
 
         # running analysis 
-
         comparison_source_file = os.path.join(comp_dir, os.path.basename(source_file))
         analysis_command = f"dsi_studio --action=cnt --source={comparison_source_file} --demo={comparison_demographics_file} --variable_list=2 --voi=2 --t_threshold=2 --fdr_threshold=0.05 --length_threshold=16 --output={os.path.join(comp_dir, 'group_analysis')} --no_tractogram=0"
         subprocess.run(analysis_command, shell=True, check=True)
