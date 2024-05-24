@@ -1,7 +1,9 @@
 # Install DSI studio
 ## Download and install
+
+[DSI Studio Download Link](https://dsi-studio.labsolver.org/download.html)
 ## Add PATH
-* add the directory containing `dsi_studio.exe` to your system's PATH environment variable.
+* Add the directory containing `dsi_studio.exe` to your system's PATH environment variable.
 * To run DSI Studio from anywhere in Windows by just typing `dsi_studio`, you'll need to do this. The PATH variable helps Windows locate executables from the command line without needing to specify the full path.
 ### Detailed instruction for adding PATH
 #### Open System Properties:
