@@ -7,8 +7,8 @@ Created on 15/02/2024
 
 
 import os
-import re
 import subprocess
+from colorama import init, Fore, Style
 
 
 def process_src_files(root_dir):
@@ -47,45 +47,3 @@ def process_src_files(root_dir):
                     print(f"Error processing {base_name}: {e}")
     return 'Recostruction completed!'
 
-
-
-# this function is under development right now, since I want to be able to extract all values such as MD, RD, AD, color_FA and FA, looking for the best structure
-
-# def generate_diffusion_metrics_and_nifti(root_dir):
-#     """
-#     Generate various diffusion metrics and NIFTI files for each subject using DSI Studio.
-
-#     This function walks through all subdirectories under the specified root directory, identifies .src.gz files,
-#     and processes them with DSI Studio to generate FA, AD, RD, MD, and other specified metrics along with a NIFTI file.
-
-#     Parameters:
-#     - root_dir (str): The root directory where preprocessing folders and .src.gz files are located.
-#     """
-
-#     for subdir, dirs, files in os.walk(root_dir):
-#         for file in files:
-#             if file.endswith(".src.gz"):
-#                 src_file_path = os.path.join(subdir, file)
-#                 subject_name = os.path.basename(src_file_path).replace('.src.gz', '')
-                
-#                 metrics_dir = os.path.join(subdir, f"{subject_name}_metrics")
-#                 os.makedirs(metrics_dir, exist_ok=True)
-                
-#                 command = (
-#                     f"dsi_studio "
-#                     f"--action=rec "
-#                     f"--source={src_file_path} "
-#                     f"--output={os.path.join(metrics_dir, subject_name)}.nii.gz "
-#                     f"--other_output=fa,ad,rd,md,nqa,iso,rdi,nrdi "
-#                     f"--param0=0.6 "
-                    
-#                 )
-#                 print(f"Executing command for {subject_name}: {command}")
-                
-#                 try:
-#                     subprocess.run(command, shell=True, check=True)
-#                     print(f"Diffusion metrics and NIFTI file generation completed for {subject_name}.")
-#                 except subprocess.CalledProcessError as e:
-#                     print(f"Error processing {subject_name}: {e}")
-
-#     return 'Diffusion metrics and NIFTI file generation process completed!'
