@@ -2,9 +2,10 @@ import os
 import pandas as pd
 import numpy as np
 import shutil
-import glob
 import subprocess
+from datetime import datetime
 from bs4 import BeautifulSoup
+from weasyprint import HTML
 
 
 def parse_demographics(file_path):
@@ -26,6 +27,28 @@ def parse_demographics(file_path):
             comparisons.append(f"{group1}_vs_{group2}")
             comparisons.append(f"{group2}_vs_{group1}")
     return comparisons
+
+
+def convert_html_to_pdf(comp_dir, group1, group2): # create new function because report does not look like we want
+    """
+    Convert the HTML report to a PDF file and save it in the 'reports' folder.
+
+    Parameters:
+        comp_dir (str): The directory containing the HTML report.
+        group1 (str): The name of the first condition.
+        group2 (str): The name of the second condition.
+        t_threshold (float): The t-score threshold used in the analysis.
+        length_threshold (int): The length threshold used in the analysis.
+    """
+    reports_dir = os.path.join(comp_dir, '..', 'reports')
+    os.makedirs(reports_dir, exist_ok=True)
+    
+    html_file = os.path.join(comp_dir, 'group_analysis.report.html')
+    if os.path.exists(html_file):
+        current_date = datetime.now().strftime('%Y%m%d')
+        pdf_file_name = f"{current_date}_t2_vl_20_{group1}_vs_{group2}.pdf" # to fix this because treshold should be dinamic and vl as well.
+        pdf_file_path = os.path.join(reports_dir, pdf_file_name)
+        HTML(html_file).write_pdf(pdf_file_path)
 
 
 def update_html_report(comp_dir, group1, group2):
@@ -106,6 +129,8 @@ def copy_files_and_update_demographics(source_file, demographics_file, statistic
         analysis_command = f"dsi_studio --action=cnt --source={comparison_source_file} --demo={comparison_demographics_file} --variable_list=2 --voi=2 --t_threshold=2 --fdr_threshold=0.05 --length_threshold=16 --output={os.path.join(comp_dir, 'group_analysis')} --no_tractogram=0"
         subprocess.run(analysis_command, shell=True, check=True)
 
-        update_html_report(comp_dir, group1, group2)
+        update_html_report(comp_dir, group1, group2) # updating pdf based on conditions inside the demographics
+
+        convert_html_to_pdf(comp_dir, group1, group2) # convert to pdf and saving under reports folder
 
 
