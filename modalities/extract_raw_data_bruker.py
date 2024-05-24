@@ -7,8 +7,8 @@ Created on 02/01/2024
 
 import os
 import re
-# from .utilities.utils import load_config
 import subprocess
+from colorama import init, Fore, Style
 
 
 def extract_subject_name(subject_file_path):
@@ -43,9 +43,9 @@ def extract_subject_name(subject_file_path):
             if match:
                 return re.sub(r'\W+', '_', match.group(1)) # replace non-alphanumeric characters in the name with underscores (_)
     except IOError as e:
-        print(f"Unable to read file {subject_file_path}: {e}")
+        print(Fore.RED + Style.BRIGHT + f"Unable to read file {subject_file_path}: {e}"  + Style.RESET_ALL)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(Fore.RED + Style.BRIGHT + f"An error occurred: {e}"  + Style.RESET_ALL)
     return None
 
 
@@ -101,12 +101,12 @@ def create_and_process_dti_dirs(root_dir, output_dir):
     """
 
     dti_dirs = find_dti_directories(root_dir)
-    print(dti_dirs)
+    # print(dti_dirs)
     
     for dti_dir in dti_dirs:
         subject_file_path = os.path.join(dti_dir, '..', 'subject')
         subject_name = extract_subject_name(subject_file_path)
-        print(subject_name)
+        # print(subject_name)
         
         if subject_name:
             subject_preprocessing_dir = os.path.join(output_dir, subject_name)
@@ -119,114 +119,11 @@ def create_and_process_dti_dirs(root_dir, output_dir):
             
             try:
                 subprocess.run(command, shell=True, check=True)
-                print(f"Processing completed for {subject_name}")
+                print(Fore.GREEN + Style.BRIGHT + f"Processing completed for {subject_name}" + Style.RESET_ALL)
             except subprocess.CalledProcessError as e:
-                print(f"Failed to execute command for {subject_name}: {e}")
+                print(Fore.RED + Style.BRIGHT + f"Failed to execute command for {subject_name}: {e}"  + Style.RESET_ALL)
         else:
-            print(f"No subject name extracted for DTI directory: {dti_dir}")
+            print(Fore.RED + Style.BRIGHT + f"No subject name extracted for DTI directory: {dti_dir}"  + Style.RESET_ALL)
 
 
 
-# def create_and_process_dti_dirs(root_dir, output_dir):
-#     """
-#     Identifies DTI directories, extracts subject names, and processes DTI data by executing external commands.
-
-#         This function finds directories containing DTI data under `root_dir`, extracts subject names from
-#         a sibling 'subject' file, and then processes each DTI directory. Processing involves creating a
-#         subject-specific preprocessing directory and executing a shell command with `subprocess.run` to
-#         handle the DTI data (e.g., creating a .src.gz file with dsi_studio).
-
-#         Parameters:
-#             - root_dir (str): The root directory to search for DTI data directories.
-#             - output_dir (str): The base directory to store processed data.
-
-#         Note:
-#             - Creates a 'preprocessing' directory under `output_dir/DTI` to store processed data.
-#             - Relies on 'method' and 'subject' files to identify and process DTI directories.
-#             - Prints the path of processed directories and any errors encountered during processing.
-#     """
-#     preprocessing_dir = os.path.join(output_dir, 'DTI', 'preprocessing')
-#     os.makedirs(preprocessing_dir, exist_ok=True)
-    
-#     dti_dirs = find_dti_directories(root_dir)
-#     print(dti_dirs)
-    
-#     for dti_dir in dti_dirs:
-#         subject_file_path = os.path.join(dti_dir, '..', 'subject')
-#         subject_name = extract_subject_name(subject_file_path)
-#         print(subject_name)
-        
-#         if subject_name:
-#             subject_preprocessing_dir = os.path.join(preprocessing_dir, subject_name)
-#             os.makedirs(subject_preprocessing_dir, exist_ok=True)
-            
-#             source_path = os.path.join(dti_dir, 'pdata', '1', '2dseq')
-#             output_path = os.path.join(subject_preprocessing_dir, f"{subject_name}.src.gz")
-
-#             command = f'dsi_studio --action=src --source="{source_path}" --output="{output_path}"'
-            
-#             try:
-#                 subprocess.run(command, shell=True, check=True)
-#                 print(f"Processing completed for {subject_name}")
-#             except subprocess.CalledProcessError as e:
-#                 print(f"Failed to execute command for {subject_name}: {e}")
-#         else:
-#             print(f"No subject name extracted for DTI directory: {dti_dir}")
-
-
-
-
-
-
-'''ORIGINAL works well on intput and output folder structure inside main.py file'''
-# def create_and_process_dti_dirs(root_dir, output_dir):
-#     """
-#     Identifies DTI directories, extracts subject names, and processes DTI data by executing external commands.
-
-#         This function finds directories containing DTI data under `root_dir`, extracts subject names from
-#         a sibling 'subject' file, and then processes each DTI directory. Processing involves creating a
-#         subject-specific preprocessing directory and executing a shell command with `subprocess.run` to
-#         handle the DTI data (e.g., creating a .src.gz file with dsi_studio).
-
-#         Parameters:
-#             - root_dir (str): The root directory to search for DTI data directories.
-
-#         Note:
-#             - Creates a 'preprocessing' directory under `output_dir` to store processed data.
-#             - Relies on 'method' and 'subject' files to identify and process DTI directories.
-#             - Prints the path of processed directories and any errors encountered during processing.
-#     """
-#     config = load_config(section='preprocessing')
-#     project = config.get('project', 'default_condition')
-#     # preprocessing_dir = os.path.join(output_dir, condition, 'preprocessing')
-#     preprocessing_dir = os.path.join(output_dir, project, 'DTI', 'preprocessing')
-#     os.makedirs(preprocessing_dir, exist_ok=True)
-    
-#     dti_dirs = find_dti_directories(root_dir)
-#     print(dti_dirs)
-    
-#     for dti_dir in dti_dirs:
-#         subject_file_path = os.path.join(dti_dir, '..', 'subject')
-#         subject_name = extract_subject_name(subject_file_path)
-#         print(subject_name)
-        
-#         if subject_name:
-#             subject_preprocessing_dir = os.path.join(preprocessing_dir, subject_name)
-#             os.makedirs(subject_preprocessing_dir, exist_ok=True)
-            
-#             source_path = os.path.join(dti_dir, 'pdata', '1', '2dseq')
-#             output_path = os.path.join(subject_preprocessing_dir, f"{subject_name}.src.gz")
-
-#             command = f'dsi_studio --action=src --source="{source_path}" --output="{output_path}"'
-            
-#             try:
-#                 subprocess.run(command, shell=True, check=True)
-#                 print(f"Processing completed for {subject_name}")
-#             except subprocess.CalledProcessError as e:
-#                 print(f"Failed to execute command for {subject_name}: {e}")
-#         else:
-#             print(f"No subject name extracted for DTI directory: {dti_dir}")
-
-
-# root_directory = '/home/sharapova/mri_management_tool/testing_DSI' 
-# create_and_process_dti_dirs(root_directory)
