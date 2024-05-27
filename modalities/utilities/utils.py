@@ -66,36 +66,7 @@ def select_project(projects):
         print("Invalid project. There is no project with this index.")
         return None
     
-
-
-# function that is added colors user output when scritp is running
-def style_text(text, color='white', bold=False):
-    """
-    Applies ANSI color and optional bold formatting to the text.
-
-        Args:
-            text (str): The text to be styled.
-            color (str): The color of the text ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white').
-            bold (bool): If True, makes the text bold.
-
-        Returns:
-            str: The styled text with ANSI escape codes.
-    """
-    colors = {
-        'red': '\033[31m',
-        'green': '\033[32m',
-        'yellow': '\033[33m',
-        'blue': '\033[34m',
-        'magenta': '\033[35m',
-        'cyan': '\033[36m',
-        'white': '\033[37m'
-    }
-    reset = '\033[0m'
-    color_code = colors.get(color, '\033[37m')
-    bold_code = '\033[1m' if bold else ''
-    return f"{bold_code}{color_code}{text}{reset}"
-
-
+    
 
 def select_file(files):
     """
