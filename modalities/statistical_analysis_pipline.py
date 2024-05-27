@@ -44,10 +44,10 @@ def convert_html_to_pdf(comp_dir, group1, group2): # create new function because
     
     html_file = os.path.join(comp_dir, 'group_analysis.report.html')
     if os.path.exists(html_file):
-        current_date = datetime.now().strftime('%Y%m%d')
+        current_date = datetime.now().strftime('%Y%m%d') # time is ok
         pdf_file_name = f"{current_date}_t2_vl_20_{group1}_vs_{group2}.pdf" # to fix this because treshold should be dinamic and vl as well.
-        pdf_file_path = os.path.join(reports_dir, pdf_file_name)
-        HTML(html_file).write_pdf(pdf_file_path)
+        pdf_file_path = os.path.join(reports_dir, pdf_file_name) # path is working ok
+        HTML(html_file).write_pdf(pdf_file_path) # find new library
 
 
 def update_html_report(comp_dir, group1, group2):
