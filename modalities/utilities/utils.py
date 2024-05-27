@@ -63,7 +63,7 @@ def select_project(projects):
     if 0 <= choice < len(projects):
         return projects[choice]
     else:
-        print("Invalid selection.")
+        print("Invalid project. There is no project with this index.")
         return None
     
 
