@@ -1,28 +1,31 @@
-# mri
+# Documentation for Correlation Tractography using DSI Studio (automatic pipline)
 
 # Setup
 * [Ubuntu](./doc/ubuntu_setup.md)
 * [Windows](./doc/windows_setup.md)
 
 
+### Designed to process MRI raw data from ParaVision360, reconstruct files, create a DSI Studio database and perform statistical analysis
 
+# Main Components
 
+**preprocessing.py**
 
+This is the main script to execute the processing workflow. It includes importing necessary modules, setting input and output directories, listing available projects, selecting a project, processing data, reconstructing files, and creating a DSI Studio database.
 
 ```
-.
-├── conditions.json                     # contains setup for the project such as name and condition for stat analysis
-├── doc
-│   ├── ubuntu_setup.md                 # documentation for ubuntu (under development and testing)
-│   └── windows_setup.md                # documentation windows
-├── main.py                             # main.py at the moment running automatic scrips based on extract_raw_data_bruker.py & reconstruction.py & db_creation.py
-└── modalities
-    ├── __init__.py
-    ├── convert_3D_to_4D.py             # this file helps to conver 3D .nii files into 4D files.
-    ├── data_base_creation.py           # STEP3: This is database creation logic 
-    ├── extract_raw_data_bruker.py      # STEP1: This is first step of existing pipline where raw data from ParaVision360 extracted into preprocessing folder
-    ├── reconstruction.py               # STEP2: This reconstruction step, takes .src file, topup/eddy, rotation to the template, b-table check (main preprocessing logic)
-    ├── statistical_analysis.py         # STEP4: Correlation Tractography statistical analysis
-    └── utilities
-        └── utils.py                    # helper function for loading condition based on conditions.json file
+graph TD;
+    A[preprocessing.py] --> B[extract_raw_data_bruker.py]
+    A --> C[reconstruction.py]
+    A --> D[data_base_creation.py]
+    A --> E[utils.py]
+
+    B --> B1[create_and_process_dti_dirs]
+    C --> C1[process_src_files]
+    D --> D1[create_dsi_database]
+    E --> E1[list_projects]
+    E --> E2[select_project]
 ```
+
+
+# Usage Instructions
