@@ -2,18 +2,25 @@
 
 # Documentation for Correlation Tractography using DSI Studio (automatic pipline)
 
+---
+
 # Setup
 * [Ubuntu](./doc/ubuntu_setup.md)
 * [Windows](./doc/windows_setup.md)
 
+---
 
-Designed to process MRI raw data from ParaVision360, reconstruct files, create a DSI Studio database and perform statistical analysis
+# Download DSI Studio
+
+* [Download](https://dsi-studio.labsolver.org/download.html)
+
+---
 
 # Main Components
 
 **preprocessing.py**
 
-This is the main script to execute the processing workflow. Durring this script it will find respective DTI 2dseq file inside raw folder from ParaVision360 convert it to .src file reconstructing files, and creating a DSI Studio database.
+This is the main script to execute the preprocessing workflow. During its execution, the script performs several steps to process DTI (Diffusion Tensor Imaging) data obtained from ParaVision360. The script's functionality includes finding and converting Bruker `2dseq` files into `.src` files, reconstructing the data, and creating a DSI Studio database for further statistical analysis.
 
 ```mermaid
 graph TD;
@@ -22,11 +29,19 @@ graph TD;
     A --> D[data_base_creation.py]
 
     B --> B1[STEP T1: 
-    Finds 2dseq file in raw data and creates directory based on subject name]
+    Finds and convert Bruker 2dseq files 
+    to SRC Files and creates directory 
+    based on subject name]
     C --> C1[STEP T2 and STEP T3: 
-    Masking, motion correction, rotation and fiber tracking file creation]
+    - Remove background signals or crop image volume;
+    - check Check b-table; 
+    motion correction, TOPUP/EDDY; 
+    - correct image orientation 
+    - fiber tracking file FIB creation]
     D --> D1[STEP C1: 
-    Agregate fiber tracking files after STEP T3 to create a database]
+    Aggregates multiple FIB files into a 
+    common template space that 
+    allows group-level analysis]
 ```
 
 
