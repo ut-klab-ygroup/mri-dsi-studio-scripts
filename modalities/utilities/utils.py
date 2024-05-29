@@ -66,7 +66,7 @@ def select_project(projects):
         print("Invalid project. There is no project with this index.")
         return None
     
-    
+
 
 def select_file(files):
     """
@@ -105,7 +105,7 @@ def get_user_confirmation():
     """
 
     while True:
-        answer = input("If you removed subjects after quality check and saved a new version of the database, did you modify the original demographics.csv? (yes/no): ").strip().lower()
+        answer = input("Did you modify the original demographics.csv? (yes/no): ").strip().lower()
         if answer in ["yes", "no"]:
             return answer
         else:
