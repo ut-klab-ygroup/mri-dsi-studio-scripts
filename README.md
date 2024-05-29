@@ -2,19 +2,17 @@
 
 # Documentation for Correlation Tractography using DSI Studio (automatic pipline)
 
----
+
 
 # Setup
 * [Ubuntu](./doc/ubuntu_setup.md)
 * [Windows](./doc/windows_setup.md)
 
----
 
 # Download DSI Studio
 
 * [Download](https://dsi-studio.labsolver.org/download.html)
 
----
 
 # Main Components
 
