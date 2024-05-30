@@ -28,3 +28,67 @@ C:\Users\Downloads\dsi_studio\dsi_studio_win\dsi_studio.exe
 #### Restart Windows Terminal or Command Prompt:
 
 For the changes to take effect, close and reopen any open Command Prompt or PowerShell windows. Now you should be able to launch DSI Studio by simply typing `dsi_studio` (assuming dsi_studio.exe is the executable's name) from any directory.
+
+# Clone the Repository:
+
+Open your terminal or command prompt and navigate to the directory where you want to clone the project, then run:
+
+
+For **SHH** connection:
+
+```
+git clone git@github.com:ut-klab-ygroup/dsi-studio-scripts.git
+```
+
+For **HTTPS** connection:
+
+```
+git clone https://github.com/ut-klab-ygroup/dsi-studio-scripts.git
+```
+
+After cloning the repository, navigate into the project directory in order to create Virtual Environment:
+
+```
+cd dsi-studio-scripts
+```
+
+# Creating a Virtual Environment
+
+**Create a Virtual Environment:**
+
+Open your terminal or command prompt and navigate to your project directory, then run:
+
+```
+python -m venv myenv
+```
+
+**Activate the Virtual Environment:**
+
+To activate the virtual environment, run the following command:
+
+```
+.\myenv\Scripts\activate
+```
+
+**Install Required Packages:**
+
+While the virtual environment is activated, install the necessary packages by running:
+
+```
+pip install python-dotenv colorama pandas numpy
+```
+
+This installs the python-dotenv, colorama, pandas, and numpy packages that is used durring the pipline. 
+
+# Using Environment Variables
+
+### Create a `.env` File
+
+Create a `.env` file in your project directory and add your environment variables. For example:
+
+```
+RAWDATA = path\to\the\folder\with\raw_data
+ANALYSIS_DATA = path\to\the\folder\with\analysis
+```
+
+So now you are ready to process analysis. Please refer to the Main Components section [here](../README.md) for further instruction.
