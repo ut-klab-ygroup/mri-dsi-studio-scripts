@@ -6,11 +6,12 @@ from modalities.extract_raw_data_bruker import create_and_process_dti_dirs
 from modalities.utilities.utils import list_projects, select_project
 from modalities.reconstruction import process_src_files
 from modalities.data_base_creation import create_dsi_database
+from modalities.utilities.parameters import *
 
 
 if __name__ == "__main__":
-    input_dir = "V:\MRI_rawdata"
-    output_dir = "V:\MRI_analysis"
+    input_dir = RAW_DATA
+    output_dir = ANALYSIS_DATA
 
     # function listing all directories within input folder (input folder expected to have only raw data under the specified project name)
     projects = list_projects(input_dir)

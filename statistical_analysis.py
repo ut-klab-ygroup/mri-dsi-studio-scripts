@@ -6,10 +6,11 @@ from colorama import init, Fore, Style
 
 from modalities.utilities.utils import list_projects, select_project, select_file, get_user_confirmation
 from modalities.statistical_analysis_pipline import create_statistical_analysis_structure, parse_demographics, copy_files_and_update_demographics
+from modalities.utilities.parameters import *
 
 
 if __name__ == "__main__":
-    working_dir = "V:\MRI_analysis"
+    working_dir = ANALYSIS_DATA
 
     projects = list_projects(working_dir)
 
