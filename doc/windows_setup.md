@@ -75,7 +75,7 @@ To activate the virtual environment, run the following command:
 While the virtual environment is activated, install the necessary packages by running:
 
 ```
-pip install python-dotenv colorama pandas numpy
+pip install python-dotenv colorama pandas numpy beautifulsoup4
 ```
 
 This installs the python-dotenv, colorama, pandas, and numpy packages that is used durring the pipline. 
