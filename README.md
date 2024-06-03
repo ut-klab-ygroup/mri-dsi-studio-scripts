@@ -29,12 +29,15 @@ graph TD;
     Finds and convert Bruker 2dseq files 
     to SRC Files and creates directory 
     based on subject name]
-    C --> C1[STEP T2 and STEP T3: 
+    C --> C1[STEP T2: 
     - Remove background signals or crop image volume;
-    - check Check b-table; 
-    motion correction, TOPUP/EDDY; 
-    - correct image orientation 
-    - fiber tracking file FIB creation]
+    - Check b-table; 
+    - Motion correction, TOPUP/EDDY]
+
+    C --> C2[STEP T3: 
+    - Correct image orientation 
+    - Fiber tracking file FIB creation]
+
     D --> D1[STEP C1: 
     Aggregates multiple FIB files into a 
     common template space that 
