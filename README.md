@@ -32,10 +32,10 @@ graph TD;
     C --> C1[STEP T2: 
     - Remove background signals or crop image volume;
     - Check b-table; 
-    - Motion correction, TOPUP/EDDY]
+    - Motion correction, TOPUP/EDDY;
+    - Correct image orientation]
 
     C1 --> C2[STEP T3: 
-    - Correct image orientation 
     - Fiber tracking file FIB creation]
 
     D --> D1[STEP C1: 
