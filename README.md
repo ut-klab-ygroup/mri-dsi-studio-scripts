@@ -1,4 +1,5 @@
 ![](https://mermaid.ink/svg/your-mermaid-code)
+
 # Documentation for Correlation Tractography using DSI Studio (automatic pipline)
 
 # Download DSI Studio
@@ -10,6 +11,8 @@
 * [Windows](./doc/windows_setup.md)
 
 # Main Components
+
+The pipeline is divided into two main components: **Preprocessing** and **Statistical Analysis**. Below is an overview of each component and the key scripts involved.
 
 ## Preprocessing 
 **preprocessing.py**
