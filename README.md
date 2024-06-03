@@ -34,7 +34,7 @@ graph TD;
     - Check b-table; 
     - Motion correction, TOPUP/EDDY]
 
-    C --> C2[STEP T3: 
+    C1 --> C2[STEP T3: 
     - Correct image orientation 
     - Fiber tracking file FIB creation]
 
