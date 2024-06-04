@@ -39,13 +39,9 @@ if __name__ == "__main__":
                 reconstruction_message = process_src_files(project_output_dir)
                 print(reconstruction_message)
 
-                # STEP C1: Creating database after 
+                # STEP C1: Creating database (normalization & registration for group-level analysis) 
                 print(Fore.GREEN + Style.BRIGHT + "Starting the creation of the DSI Studio database..." + Style.RESET_ALL)
                 create_dsi_database(project_output_dir)
-
-                # # STEP C1: Creating database after 
-                # print("Starting the creation of the DSI Studio database...")
-                # run_statistical_analysis(project_output_dir)
                 
                 print(Fore.GREEN + Style.BRIGHT + "Processing completed. Please open database in DSI Studio to check if there is any artifacts or missregistration to remove some subjects!" + Style.RESET_ALL)
         else:
