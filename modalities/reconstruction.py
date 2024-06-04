@@ -8,7 +8,7 @@ Created on 15/02/2024
 
 import os
 import subprocess
-from colorama import init, Fore, Style
+from colorama import init, Fore, Style, Back
 
 
 def process_src_files(root_dir):
@@ -45,5 +45,5 @@ def process_src_files(root_dir):
                     print(Fore.GREEN + Style.BRIGHT + f"Reconstrunction process completed for {base_name}" + Style.RESET_ALL)
                 except subprocess.CalledProcessError as e:
                     print(Fore.RED + Style.BRIGHT + f"Error processing {base_name}: {e}" + Style.RESET_ALL)
-    return Fore.RED + Style.BRIGHT + 'Recostruction process completed!' + Style.RESET_ALL
+    return Back.GREEN + 'Reconstruction process is completed!' + Style.RESET_ALL
 
