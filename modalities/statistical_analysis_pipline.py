@@ -5,7 +5,7 @@ import shutil
 import subprocess
 from datetime import datetime
 from bs4 import BeautifulSoup
-from weasyprint import HTML
+from weasyprint import HTML, CSS
 
 
 def parse_demographics(file_path): # add condition for M and F
@@ -47,7 +47,19 @@ def convert_html_to_pdf(comp_dir, group1, group2): # create new function because
         current_date = datetime.now().strftime('%Y%m%d') # time is ok
         pdf_file_name = f"{current_date}_t2_vl_20_{group1}_vs_{group2}.pdf" # to fix this because treshold should be dinamic and vl as well.
         pdf_file_path = os.path.join(reports_dir, pdf_file_name) # path is working ok
-        HTML(html_file).write_pdf(pdf_file_path) # find new library
+        
+        custom_css = """
+            @page { size: A4; margin: 1in; }
+            body { font-family: serif; font-size: 12pt; line-height: 1.5; }
+            h1, h2, h3 { font-family: sans-serif; }
+            h1 { font-size: 24pt; margin-bottom: 20px; }
+            h2 { font-size: 18pt; margin-bottom: 15px; }
+            h3 { font-size: 14pt; margin-bottom: 10px; }
+            p { margin-bottom: 10px; }
+            img { max-width: 100%; height: auto; margin-bottom: 10px; }
+        """
+        
+        HTML(html_file).write_pdf(pdf_file_path, stylesheets=[CSS(string=custom_css)])
 
 
 def update_html_report(comp_dir, group1, group2):
@@ -75,11 +87,11 @@ def update_html_report(comp_dir, group1, group2):
             elif 'Tracks with higher FA in dsi_conditions 0' in tag.text:
                 tag.string = f'Tracks with higher FA in {group2}'
 
-        # for tag in soup.find_all('p'):
-        #     if 'The connectometry analysis found tracts showing higher FA in dsi_conditions 1' in tag.text:
-        #         tag.string = tag.text.replace('dsi_conditions 1', group1)
-        #     elif 'The connectometry analysis found tracts showing higher FA in dsi_conditions 0' in tag.text:
-        #         tag.string = tag.text.replace('dsi_conditions 0', group2)
+        for tag in soup.find_all('p'):
+            if 'The connectometry analysis found tracts showing higher FA in dsi_conditions 1' in tag.text:
+                tag.string = tag.text.replace('dsi_conditions 1', group1)
+            elif 'The connectometry analysis found tracts showing higher FA in dsi_conditions 0' in tag.text:
+                tag.string = tag.text.replace('dsi_conditions 0', group2)
 
         with open(html_file, 'w', encoding='utf-8') as file:
             file.write(str(soup))
