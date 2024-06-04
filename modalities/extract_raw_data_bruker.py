@@ -51,33 +51,38 @@ def extract_subject_name(subject_file_path):
 
 def find_dti_directories(root_dir):
     """
-    Searches for directories containing DTI (Diffusion Tensor Imaging) data within a given root directory.
+    Searches for directories containing DTI (Diffusion Tensor Imaging) data with a specific diffusion direction count within a given root directory.
 
         This function recursively traverses all directories starting from `root_dir`. It looks for directories
         containing a file named 'method'. For each 'method' file found, the function reads its content to check
-        for the presence of strings "DTI" or "DtiEpi", which indicate the directory contains DTI data. If such
+        for the presence of strings "DTI" or "DtiEpi", which indicate the directory contains DTI data. Additionally,
+        it checks for the presence of a specific diffusion direction count (`##$PVM_DwNDiffDir=60`). If such
         indications are found, the directory is considered a DTI directory, and its path is added to a list.
 
-        Parameters:
-            - root_dir (str): The path to the root directory from which the search for DTI directories begins.
+    Parameters:
+        - root_dir (str): The path to the root directory from which the search for DTI directories begins.
 
-        Returns:
-            - list: A list of paths to directories that contain DTI data. If no DTI directories are found, an empty
-            list is returned.
+    Returns:
+        - list: A list of paths to directories that contain DTI data with the required diffusion directions. If no
+        DTI directories are found, an empty list is returned.
 
-        Note:
-            - The function assumes a specific file naming and content convention to identify DTI directories. This
-            means it may not find DTI data formatted or organized differently.
-            - This function does not validate the content beyond the presence of "DTI" or "DtiEpi" in the 'method'
-            files. It is assumed that the presence of these strings accurately indicates DTI data.
+    Note:
+        - The function assumes a specific file naming and content convention to identify DTI directories. This
+        means it may not find DTI data formatted or organized differently.
+        - This function does not validate the content beyond the presence of "DTI", "DtiEpi", or "DtiStandard" in the
+        'method' files and the required number of diffusion directions. It is assumed that the presence of these strings
+        and values accurately indicates DTI data.
     """
     dti_dirs = []
     for subdir, dirs, files in os.walk(root_dir):
         if 'method' in files:
-            with open(os.path.join(subdir, 'method'), 'r') as f:
+            method_file_path = os.path.join(subdir, 'method')
+            with open(method_file_path, 'r') as f:
                 content = f.read()
-                if "DTI" in content or "DtiEpi" in content or 'DtiStandard' in content:
-                    dti_dirs.append(subdir)
+                if ("DTI" in content or "DtiEpi" in content or 'DtiStandard' in content):
+                    diff_dir_match = re.search(r'##\$PVM_DwNDiffDir=(\d+)', content)
+                    if diff_dir_match and int(diff_dir_match.group(1)) == 60:
+                        dti_dirs.append(subdir)
     return dti_dirs
 
 
@@ -101,7 +106,7 @@ def create_and_process_dti_dirs(root_dir, output_dir):
     """
 
     dti_dirs = find_dti_directories(root_dir)
-    # print(dti_dirs)
+    print(dti_dirs)
     
     for dti_dir in dti_dirs:
         subject_file_path = os.path.join(dti_dir, '..', 'subject')
