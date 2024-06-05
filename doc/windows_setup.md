@@ -54,6 +54,8 @@ cd dsi-studio-scripts
 
 # Creating a Virtual Environment
 
+### Using Python's `venv` Module:
+
 **Create a Virtual Environment:**
 
 Open your terminal or command prompt and navigate to your project directory, then run:
@@ -70,12 +72,30 @@ To activate the virtual environment, run the following command:
 .\myenv\Scripts\activate
 ```
 
+### Using `Anaconda`:
+
+**Create a Virtual Environment:**
+
+Open your terminal or Anaconda Prompt and navigate to your project directory, then run:
+
+```
+conda create --name myenv
+```
+
+**Activate the Virtual Environment:**
+
+To activate the virtual environment, run the following command:
+
+```
+conda activate myenv
+```
+
 **Install Required Packages:**
 
 While the virtual environment is activated, install the necessary packages by running:
 
 ```
-pip install python-dotenv colorama pandas numpy beautifulsoup4
+pip install python-dotenv colorama pandas numpy beautifulsoup4 WeasyPrint
 ```
 
 This installs the python-dotenv, colorama, pandas, and numpy packages that is used durring the pipline. 
