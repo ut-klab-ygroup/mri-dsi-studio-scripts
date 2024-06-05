@@ -84,7 +84,7 @@ Follow the installation instructions provided for your operating system. Ensure 
 
 Before running analysis ensure that you have defined a project name and agragated ParaVision360 raw data under the input directory. The preprocessing step involves converting raw DTI data, reconstructing it, and creating a database for further analysis.
 
-Run the Preprocessing Script:
+**Run the Preprocessing Script:**
 ```
 python preprocessing.py
 ```
@@ -105,7 +105,7 @@ After the preprocessing step and database creation, it's essential to manually v
 The statistical analysis step processes the selected project, organizes data, and performs analysis based on demographic information. Demographic is a file (please use this template) used to run statistical analysis based on condition. Please note that it is inportant to ensure that subject name inside the demographic file matches with names in the same order inside the Database file. If during the **Step 3: Manual Check of Database** you have detected any issues with registration and removed the subject you need to remove it from Demographic file. 
 
 
-Run the Statistical Analysis Script:
+**Run the Statistical Analysis Script:**
 ```
 python statistical_analysis.py
 ```
