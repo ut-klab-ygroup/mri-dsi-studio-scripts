@@ -7,7 +7,6 @@
 *.bvec
 *.nii.src.gz
 *.nii.src.gz.dti.fib.gz
-*.txt
 data/
 .DS_Store
 .python-version
