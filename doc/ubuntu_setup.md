@@ -4,7 +4,7 @@
 
 ### Step 1: Install DSI_Studio:
 
-Please install compiled version dsi_studio_ubuntu2204.zip form DSI Studio web site
+Please install compiled version `dsi_studio_ubuntu2204.zip` form DSI Studio web site
 
 [Download](https://dsi-studio.labsolver.org/download.html)
 
@@ -61,11 +61,24 @@ Navigate to the extracted DSI Studio directory:
 cd dsi-studio/
 ```
 
-Run the DSI Studio executable
+Run the DSI Studio:
 
 ```
 ./dsi_studio
 ```
+
+If you have an issue with permissions, please run following command to give the necessary permissions:
+
+```
+chmod +x dsi_studio
+```
+
+After setting the executable permissions, you can run the command again:
+
+```
+./dsi_studio
+```
+
 
 If following screen appeared you have successfully installed DSI Studio. 
 
