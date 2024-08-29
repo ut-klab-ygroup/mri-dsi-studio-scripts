@@ -88,9 +88,30 @@ If you encounter the error while loading shared libraries: libQt6Charts.so.6: ca
 
 ### Step 5: Make DSI Studio Globally Accessible:
 
-To run DSI Studio from any directory, add the DSI Studio directory to your PATH environment variable.
+To run DSI Studio from any directory (from anywhere), add the DSI Studio directory to your PATH environment variable.
+
 
 Depending on the shell you are using, open the appropriate configuration file:
+
+**Note:** If you are unsure which shell you are using, you can check by running the following command in your terminal:
+
+```bash
+echo $SHELL
+```
+
+The output will look something like this:
+
+```
+/bin/bash
+```
+
+or
+
+```
+/bin/zsh
+```
+
+Then please add the path to configuration based on your shell:
 
 - For `bash`:
 
@@ -140,6 +161,8 @@ dsi_studio
 ```
 
 DSI Studio should now run from any location if not change the path again. 
+
+
 
 
 
