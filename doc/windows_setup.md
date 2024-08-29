@@ -60,8 +60,8 @@ cd dsi-studio-scripts
 
 Open your terminal or command prompt and navigate to your project directory, then run:
 
-```
-python -m venv myenv
+```bash
+python -m venv dsi_analysis
 ```
 
 **Activate the Virtual Environment:**
@@ -69,7 +69,7 @@ python -m venv myenv
 To activate the virtual environment, run the following command:
 
 ```
-.\myenv\Scripts\activate
+.\dsi_analysis\Scripts\activate
 ```
 
 ### Using `Anaconda`:
@@ -79,7 +79,7 @@ To activate the virtual environment, run the following command:
 Open your terminal or Anaconda Prompt and navigate to your project directory, then run:
 
 ```
-conda create --name myenv
+conda create --name dsi_analysis
 ```
 
 **Activate the Virtual Environment:**
@@ -87,7 +87,15 @@ conda create --name myenv
 To activate the virtual environment, run the following command:
 
 ```
-conda activate myenv
+conda activate dsi_analysis
+```
+
+**Install pip in the Conda Environment (if needed):**
+
+If you encounter an issue where pip is not available in your Conda environment, you can install it by running:
+
+```
+conda install pip
 ```
 
 **Install Required Packages:**
