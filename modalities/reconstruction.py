@@ -65,7 +65,6 @@ def process_src_files(subject_dir):
     """
     files_processed = 0
 
-    # Walk through only the current subject's directory and process .src.gz files
     for subdir, dirs, files in os.walk(subject_dir):
         for file in files:
             if file.endswith(".src.gz"):
