@@ -87,34 +87,70 @@ def find_dti_directories(root_dir):
 
 
 
-""" Function adjusted based on new logic execution. Now it runs thought fixed input and is trying to find a project where raw data is located"""
+""" Function archived and related to old pipline inside preprocessing.py. It runs thought fixed input and is trying to find a project where raw data is located!"""
+# def create_and_process_dti_dirs(root_dir, output_dir):
+#     """
+#     Identifies and processes DTI data directories within a given root directory.
+
+#         This function locates DTI directories, extracts subject names from 'subject' files, 
+#         and processes the data by creating subject-specific preprocessing directories 
+#         and executing DSI Studio commands to generate .src.gz files.
+
+#     Parameters:
+#         - root_dir (str): The root directory containing raw ParaVision360 data.
+#         - output_dir (str): The directory where the processed data should be stored.
+
+#         Each raw ParaVision360 data is expected to contain a 'pdata' directory with a '1/2dseq' file 
+#         which is processed to a .src.gz file in a structured preprocessing subdirectory 
+#         named after the extracted subject.
+#     """
+
+#     dti_dirs = find_dti_directories(root_dir)
+#     print(dti_dirs)
+    
+#     for dti_dir in dti_dirs:
+#         subject_file_path = os.path.join(dti_dir, '..', 'subject')
+#         subject_name = extract_subject_name(subject_file_path)
+#         # print(subject_name)
+        
+#         if subject_name:
+#             subject_preprocessing_dir = os.path.join(output_dir, subject_name)
+#             os.makedirs(subject_preprocessing_dir, exist_ok=True)
+            
+#             source_path = os.path.join(dti_dir, 'pdata', '1', '2dseq')
+#             output_path = os.path.join(subject_preprocessing_dir, f"{subject_name}.src.gz")
+
+#             command = f'dsi_studio --action=src --source="{source_path}" --output="{output_path}"'
+            
+#             try:
+#                 subprocess.run(command, shell=True, check=True)
+#                 print(Fore.GREEN + Style.BRIGHT + f"Processing completed for {subject_name}" + Style.RESET_ALL)
+#             except subprocess.CalledProcessError as e:
+#                 print(Fore.RED + Style.BRIGHT + f"Failed to execute command for {subject_name}: {e}"  + Style.RESET_ALL)
+#         else:
+#             print(Fore.RED + Style.BRIGHT + f"No subject name extracted for DTI directory: {dti_dir}"  + Style.RESET_ALL)
+
+
+
+
+########### new logic based on file and condition extraction
+
 def create_and_process_dti_dirs(root_dir, output_dir):
     """
     Identifies and processes DTI data directories within a given root directory.
-
-        This function locates DTI directories, extracts subject names from 'subject' files, 
-        and processes the data by creating subject-specific preprocessing directories 
-        and executing DSI Studio commands to generate .src.gz files.
-
-    Parameters:
-        - root_dir (str): The root directory containing raw ParaVision360 data.
-        - output_dir (str): The directory where the processed data should be stored.
-
-        Each raw ParaVision360 data is expected to contain a 'pdata' directory with a '1/2dseq' file 
-        which is processed to a .src.gz file in a structured preprocessing subdirectory 
-        named after the extracted subject.
     """
-
     dti_dirs = find_dti_directories(root_dir)
     print(dti_dirs)
+    subject_preprocessing_dir = None 
+    subject_name = None 
     
     for dti_dir in dti_dirs:
         subject_file_path = os.path.join(dti_dir, '..', 'subject')
         subject_name = extract_subject_name(subject_file_path)
-        # print(subject_name)
         
         if subject_name:
             subject_preprocessing_dir = os.path.join(output_dir, subject_name)
+            print(Fore.YELLOW + f"Creating subject preprocessing directory: {subject_preprocessing_dir}" + Style.RESET_ALL)
             os.makedirs(subject_preprocessing_dir, exist_ok=True)
             
             source_path = os.path.join(dti_dir, 'pdata', '1', '2dseq')
@@ -129,6 +165,7 @@ def create_and_process_dti_dirs(root_dir, output_dir):
                 print(Fore.RED + Style.BRIGHT + f"Failed to execute command for {subject_name}: {e}"  + Style.RESET_ALL)
         else:
             print(Fore.RED + Style.BRIGHT + f"No subject name extracted for DTI directory: {dti_dir}"  + Style.RESET_ALL)
+    return subject_preprocessing_dir, subject_name
 
 
 
