@@ -6,6 +6,7 @@ Created on 04/28/2024
 """
 import os
 import json
+import pandas as pd
 
 def load_config(config_path='conditions.json', section=None):
     """
@@ -110,6 +111,36 @@ def get_user_confirmation():
             return answer
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
+
+
+
+def load_subjects_from_excel(excel_file):
+    """
+    Load subjects from the Excel file, filter by the 'Include' column.
+
+    Parameters:
+        excel_file (str): Path to the subjects Excel file.
+
+    Returns:
+        DataFrame: Filtered DataFrame containing subjects marked as 'True' for inclusion.
+    """
+    df = pd.read_excel(excel_file)
+    df_filtered = df[df['Include'] == True]  # Filter based on 'Include' column
+    return df_filtered
+
+
+def group_by_condition(df):
+    """
+    Group subjects by their Condition (Single, Group).
+
+    Parameters:
+        df (DataFrame): Filtered DataFrame of subjects.
+
+    Returns:
+        dict: Dictionary where keys are conditions (e.g., 'Single', 'Group') and values are lists of subject IDs.
+    """
+    grouped = df.groupby('Condition')['Subject ID'].apply(list).to_dict()
+    return grouped
 
 
 
