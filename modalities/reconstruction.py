@@ -63,7 +63,7 @@ def process_src_files(subject_dir):
     Returns:
         - int: The number of .src.gz files processed for the current subject.
     """
-    files_processed = 0
+    files_processed = 0 # Conuting number of files can be removed in future
 
     for subdir, dirs, files in os.walk(subject_dir):
         for file in files:
