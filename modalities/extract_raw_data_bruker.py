@@ -137,7 +137,29 @@ def find_dti_directories(root_dir):
 
 def create_and_process_dti_dirs(root_dir, output_dir):
     """
-    Identifies and processes DTI data directories within a given root directory.
+    Identifies, processes, and creates subject-specific directories for DTI data found in the given root directory.
+    
+    The function performs the following steps:
+    1. Searches for DTI directories in the specified root directory.
+    2. Extracts the subject name from a file located in each DTI directory.
+    3. Creates a corresponding preprocessing directory for each subject in the output directory.
+    4. Runs a DSI Studio command to process the '2dseq' DTI file and saves the output in the subject's directory.
+    5. Returns the path to the last processed subject's directory and the extracted subject name.
+    
+    Parameters:
+        - root_dir (str): Path to the root directory where the DTI data is located.
+        - output_dir (str): Path to the directory where the processed subject data should be stored.
+    
+    Returns:
+        - tuple: The last subject preprocessing directory created (str) and the corresponding subject name (str).
+    
+    Prints:
+        - The list of identified DTI directories.
+        - The creation of subject preprocessing directories.
+        - Success or failure messages for processing each subject's DTI data.
+    
+    Raises:
+        subprocess.CalledProcessError: If the DSI Studio command fails for any subject.
     """
     dti_dirs = find_dti_directories(root_dir)
     print(dti_dirs)
