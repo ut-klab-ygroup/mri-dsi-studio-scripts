@@ -97,7 +97,7 @@ def select_file(files):
         return None
     
 
-def get_user_confirmation():
+def get_user_confirmation(): # This function needs to be updated
     """
     Prompt the user to confirm if the original demographics.csv file was modified after removing subjects.
 
