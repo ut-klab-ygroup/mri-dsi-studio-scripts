@@ -144,4 +144,28 @@ def group_by_condition(df):
 
 
 
+def get_subject_name(subject_id):
+    """
+    Extract the subject name from the subject ID. # This functions needs to be tested on more subjest (keeping for now)
+    """
+    # Split on '_1_' and take the first part
+    subject_name_part = subject_id.split('_1_')[0] # spliting the subject_name_part into parts
+    
+    parts = subject_name_part.split('_') # Remove the first two parts if they are dates/times
+    
+    if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():
+        parts = parts[2:]
+    
+    for i, part in enumerate(parts): # finding the first date in the remaining parts
+        if len(part) == 8 and part.isdigit():
+            date_index = i
+            break
+    else:
+        date_index = 0
+    
+    subject_name_parts = parts[date_index:] # Subject name is from date_index to the end
+    subject_name = '_'.join(subject_name_parts)
+    return subject_name
+
+
 # dsi_studio --action=cnt --source=4D_HF.fa.db.fib.gz --demo=participants_test.tsv --variable_list=0 --voi=0 --t_threshold=2 --length_threshold=16 --output=group_analysis   
