@@ -1,0 +1,1 @@
+# data base agregation logic based on conditions
