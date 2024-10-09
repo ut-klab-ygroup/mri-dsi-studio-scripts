@@ -5,7 +5,7 @@ import shutil
 import subprocess
 from datetime import datetime
 from bs4 import BeautifulSoup
-from weasyprint import HTML, CSS
+# from weasyprint import HTML, CSS
 
 
 def parse_demographics(file_path): # add condition for M and F
@@ -28,38 +28,40 @@ def parse_demographics(file_path): # add condition for M and F
     return comparisons
 
 
-def convert_html_to_pdf(comp_dir, group1, group2): # create new function because report does not look like we want
-    """
-    Convert the HTML report to a PDF file and save it in the 'reports' folder.
+# DELETE this function does not work on windows
 
-    Parameters:
-        comp_dir (str): The directory containing the HTML report.
-        group1 (str): The name of the first condition.
-        group2 (str): The name of the second condition.
-        t_threshold (float): The t-score threshold used in the analysis.
-        length_threshold (int): The length threshold used in the analysis.
-    """
-    reports_dir = os.path.join(comp_dir, '..', 'reports')
-    os.makedirs(reports_dir, exist_ok=True)
+# def convert_html_to_pdf(comp_dir, group1, group2): # create new function because report does not look like we want
+#     """
+#     Convert the HTML report to a PDF file and save it in the 'reports' folder.
+
+#     Parameters:
+#         comp_dir (str): The directory containing the HTML report.
+#         group1 (str): The name of the first condition.
+#         group2 (str): The name of the second condition.
+#         t_threshold (float): The t-score threshold used in the analysis.
+#         length_threshold (int): The length threshold used in the analysis.
+#     """
+#     reports_dir = os.path.join(comp_dir, '..', 'reports')
+#     os.makedirs(reports_dir, exist_ok=True)
     
-    html_file = os.path.join(comp_dir, 'group_analysis.report.html')
-    if os.path.exists(html_file):
-        current_date = datetime.now().strftime('%Y%m%d') # time is ok
-        pdf_file_name = f"{current_date}_t2_vl_20_{group1}_vs_{group2}.pdf" # to fix this because treshold should be dinamic and vl as well.
-        pdf_file_path = os.path.join(reports_dir, pdf_file_name) # path is working ok
+#     html_file = os.path.join(comp_dir, 'group_analysis.report.html')
+#     if os.path.exists(html_file):
+#         current_date = datetime.now().strftime('%Y%m%d') # time is ok
+#         pdf_file_name = f"{current_date}_t2_vl_20_{group1}_vs_{group2}.pdf" # to fix this because treshold should be dinamic and vl as well.
+#         pdf_file_path = os.path.join(reports_dir, pdf_file_name) # path is working ok
         
-        custom_css = """
-            @page { size: A4; margin: 1in; }
-            body { font-family: serif; font-size: 12pt; line-height: 1.5; }
-            h1, h2, h3 { font-family: sans-serif; }
-            h1 { font-size: 24pt; margin-bottom: 20px; }
-            h2 { font-size: 18pt; margin-bottom: 15px; }
-            h3 { font-size: 14pt; margin-bottom: 10px; }
-            p { margin-bottom: 10px; }
-            img { max-width: 100%; height: auto; margin-bottom: 10px; }
-        """
+#         custom_css = """
+#             @page { size: A4; margin: 1in; }
+#             body { font-family: serif; font-size: 12pt; line-height: 1.5; }
+#             h1, h2, h3 { font-family: sans-serif; }
+#             h1 { font-size: 24pt; margin-bottom: 20px; }
+#             h2 { font-size: 18pt; margin-bottom: 15px; }
+#             h3 { font-size: 14pt; margin-bottom: 10px; }
+#             p { margin-bottom: 10px; }
+#             img { max-width: 100%; height: auto; margin-bottom: 10px; }
+#         """
         
-        HTML(html_file).write_pdf(pdf_file_path, stylesheets=[CSS(string=custom_css)])
+#         HTML(html_file).write_pdf(pdf_file_path, stylesheets=[CSS(string=custom_css)])
 
 
 def update_html_report(comp_dir, group1, group2):
@@ -140,6 +142,6 @@ def copy_files_and_update_demographics(source_file, demographics_file, statistic
 
         update_html_report(comp_dir, group1, group2) # updating pdf based on conditions inside the demographics
 
-        convert_html_to_pdf(comp_dir, group1, group2) # convert to pdf and saving under reports folder
+        # convert_html_to_pdf(comp_dir, group1, group2) # convert to pdf and saving under reports folder
 
 
