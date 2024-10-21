@@ -44,7 +44,7 @@ if __name__ == "__main__":
                     subjects_df = load_subjects_from_excel(excel_file)
                     if not subjects_df.empty:
                         
-                        subjects_by_condition = group_by_condition(subjects_df) # grouping subjects by condition
+                        subjects_by_condition = group_by_condition(subjects_df) # grouping subjects by condition TODO:
 
                         # checking if reconstruction has already been done in order to save time and not return reconstuction each time
                         reconstruction_needed = True
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
                         # STEP C1: Creating database (normalization & registration for group-level analysis) # this process is moving to new file
                         # print(Back.GREEN + "Starting the creation of the DSI Studio database..." + Style.RESET_ALL)
-                        # create_dsi_database(project_output_dir)
+                        # create_dsi_database(project_output_dir) TODO: registration needs to be done separatelly
 
                         print(Fore.GREEN + "Processing completed. Next step will be to create a databased based on your conditions!" + Style.RESET_ALL)
                     else:
