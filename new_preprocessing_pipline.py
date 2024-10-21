@@ -20,11 +20,11 @@ if __name__ == "__main__":
     output_dir = r"C:\preprocessing\mri_analysis"   
 
     
-    projects = list_projects(input_dir) # listing  all projects in the input directory
+    projects = list_projects(input_dir) # listing all projects in the input directory
  
     if projects:
         
-        selected_project = select_project(projects) # Prompt the user to select a project for initializing extraction
+        selected_project = select_project(projects) # aks the user to select a project for initializing extraction
 
         if selected_project:
             project_input_dir = os.path.join(input_dir, selected_project)
