@@ -301,7 +301,7 @@ def create_dsi_database(project_output_dir, selected_project, selected_cohorts, 
         shutil.copy(src_path, dst_path)
         print(Fore.GREEN + f"Copied {src_path} to {dst_path}" + Style.RESET_ALL)
     
-    # Run DSI Studio
+    # run DSI Studio
     current_date = datetime.now().strftime('%Y%m%d')
     dsi_studio_cmd = f'dsi_studio --action=atl --cmd=db --source="{database_dir}" --output="{database_dir}/data_base_{current_date}.fa.db.fib.gz" --template=1 --index_name=fa'
     
