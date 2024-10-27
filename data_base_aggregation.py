@@ -7,6 +7,8 @@ from datetime import datetime
 from colorama import Fore, Style
 from modalities.utilities.utils import list_projects, select_project
 
+
+
 def load_configuration(config_file):
     """Load the configuration file (JSON)."""
     if os.path.exists(config_file):
@@ -64,7 +66,7 @@ def create_dsi_database(project_output_dir, selected_project, selected_cohorts, 
     print(Fore.CYAN + f"Preprocessing directory: {project_output_dir}" + Style.RESET_ALL)
     print(Fore.CYAN + f"Database directory: {database_dir}" + Style.RESET_ALL)
 
-    # Collect .dti.fib.gz files
+    # collecting .dti.fib.gz files
     dti_files = []
     for cohort in selected_cohorts:
         subjects = selected_subjects_by_cohort[cohort]
@@ -89,7 +91,7 @@ def create_dsi_database(project_output_dir, selected_project, selected_cohorts, 
     else:
         print(Fore.GREEN + f"Found {len(dti_files)} files to copy to the database directory." + Style.RESET_ALL)
     
-    # Copy files to database directory
+    # copy files to database directory for all subjects
     for src_path in dti_files:
         dst_path = os.path.join(database_dir, os.path.basename(src_path))
         shutil.copy(src_path, dst_path)
@@ -119,12 +121,12 @@ def create_dsi_database(project_output_dir, selected_project, selected_cohorts, 
     print(Fore.GREEN + f"Actions logged in {log_file}" + Style.RESET_ALL)
 
 if __name__ == "__main__":
-    input_dir = r"C:\preprocessing\mri_analysis"  # Base directory where projects are stored
+    input_dir = r"C:\preprocessing\mri_analysis"  # base directory where projects are stored
 
-    projects = list_projects(input_dir)  # List all projects in the input directory
+    projects = list_projects(input_dir)  # list all projects in the input directory
 
     if projects:
-        selected_project = select_project(projects)  # Ask user to select a project
+        selected_project = select_project(projects)  # ask user to select a project
 
         if selected_project:
             project_output_dir = os.path.join(input_dir, selected_project, 'DTI', 'preprocessing')
@@ -150,7 +152,7 @@ if __name__ == "__main__":
                                     subjects = project_config['cohorts'][cohort]
                                     selected_subjects = select_subjects_from_cohort(subjects, cohort)
                                     selected_subjects_by_cohort[cohort] = selected_subjects
-                                # Create a new folder inside data_base with the selected cohort names
+                                # create a new folder inside data_base with the selected cohort names
                                 database_name = "_".join(selected_cohorts)
                                 print(Fore.GREEN + f"Creating DSI database for cohorts: {selected_cohorts}" + Style.RESET_ALL)
                                 create_dsi_database(project_output_dir, selected_project, selected_cohorts, selected_subjects_by_cohort, database_name)
