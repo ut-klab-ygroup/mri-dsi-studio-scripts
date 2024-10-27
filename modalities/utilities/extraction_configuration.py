@@ -1,6 +1,6 @@
 import os
 import json
-import datetime
+from datetime import datetime
 
 
 def load_configuration(config_file): 
@@ -11,7 +11,7 @@ def load_configuration(config_file):
     return {"projects": {}}
 
 # save database based on extracted files
-def save_configuration(config, config_file): # TODO: docstring
+def save_configuration(config, config_file):
     with open(config_file, 'w') as f:
         json.dump(config, f, indent=4)
 
@@ -31,7 +31,7 @@ def update_configuration(config, project_name, subject_name, cohort): # TODO: do
     # capturing date
     config['projects'][project_name]['last_run'] = datetime.now().strftime("%Y-%m-%d")
 
-def ask_reconstruction(): # TODO: docstring
+def ask_reconstruction():
     """Ask the user if they want to rerun reconstruction for all previously processed subjects."""
     while True:
         user_choice = input("Do you want to rerun the reconstruction for existing subjects? (yes/no): ").strip().lower()
