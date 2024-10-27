@@ -22,7 +22,7 @@ from modalities.utilities.extraction_configuration import (
 
 from modalities.reconstruction import process_src_files
 
-
+# TODO: fix repeted processes make it more redable (maybe split into different files and folders) (due date: 07/11/2024)
 
 if __name__ == "__main__":
     input_dir = r"C:\preprocessing\raw_analysis"
@@ -129,13 +129,13 @@ if __name__ == "__main__":
                                 # Ensure subject_name matches subject_name_extracted
 
                                 if subject_preprocessing_dir and subject_name_extracted:
-                                    # STEP T2: Reconstruction process based on [Step T2][Edit][Image flip z] (fix when proper orientation fixed)
+                                    # STEP T2: Reconstruction process based on [Step T2][Edit][Image flip z] (fix when proper orientation detected)
                                     print(Fore.YELLOW + "Starting reconstruction process for .src.gz files..." + Style.RESET_ALL)
                                     process_src_files(subject_preprocessing_dir)
                                     print(Fore.GREEN + Style.BRIGHT + f"Processed files for subject '{subject_name_extracted}'." + Style.RESET_ALL)
 
                                     # Update the configuration with the processed subject
-                                    # Assuming cohort information is extracted from subject_name (e.g., 'S123_HF4' where 'HF4' is the cohort) TODO: checking if this will work on project with no cohort ???
+                                    # Assuming cohort information is extracted from subject_name (e.g., 'S123_HF4' where 'HF4' is the cohort) TODO: checking if this will work on project with no cohort ??? (due date: 03/11/2024)
                                     cohort = subject_name.split('_')[1] if '_' in subject_name else 'default_cohort'
                                     update_configuration(config, selected_project, subject_name, cohort)
                                 else:
