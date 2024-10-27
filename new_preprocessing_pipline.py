@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
                                     # Update the configuration with the processed subject
                                     # Assuming cohort information is extracted from subject_name (e.g., 'S123_HF4' where 'HF4' is the cohort) TODO: checking if this will work on project with no cohort ??? (due date: 03/11/2024)
-                                    cohort = subject_name.split('_')[1] if '_' in subject_name else 'default_cohort'
+                                    cohort = subject_name.split('_')[1] if '_' in subject_name else 'default_cohort' # this should be fixed because maybe it can be part of excel file and Cohort column
                                     update_configuration(config, selected_project, subject_name, cohort)
                                 else:
                                     print(Fore.RED + Style.BRIGHT + f"Skipping reconstruction for '{subject_id}' due to previous errors." + Style.RESET_ALL)
