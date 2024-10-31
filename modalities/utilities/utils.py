@@ -168,4 +168,4 @@ def get_subject_name(subject_id):
     return subject_name
 
 
-# dsi_studio --action=cnt --source=4D_HF.fa.db.fib.gz --demo=participants_test.tsv --variable_list=0 --voi=0 --t_threshold=2 --length_threshold=16 --output=group_analysis   
+# dsi_studio --action=cnt --source=4D_HF.fa.db.fib.gz --demo=participants_test.tsv --variable_list=0 --voi=0 --t_threshold=2 --length_threshold=16 --output=group_analysis
