@@ -82,7 +82,7 @@ After setting the executable permissions, you can run the command again:
 
 If following screen appeared you have successfully installed DSI Studio. 
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 If you encounter the error while loading shared libraries: libQt6Charts.so.6: cannot open shared object file: No such file or directory, ensure all dependencies from Step 2 are installed.
 
