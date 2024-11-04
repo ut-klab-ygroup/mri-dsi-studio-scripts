@@ -81,3 +81,26 @@ def process_src_files(subject_dir):
 
     return files_processed
 
+
+def rerun_reconstruction_src_files(subject_dir): # TODO: implement this functionality based on pipline_configuration.json file
+    """
+    Allows to fix orientation if it is wrong (the only one difference is dsi_studio command)
+    """
+    files_processed = 0 # Conuting number of files can be removed in future
+
+    for subdir, dirs, files in os.walk(subject_dir):
+        for file in files:
+            if file.endswith(".src.gz"):
+                src_file_path = os.path.join(subdir, file)
+                base_name = os.path.basename(src_file_path).replace('.src.gz', '')
+
+                command = f'dsi_studio --action=rec --source="{src_file_path}" --method=1 --param0=0.6 --cmd="[Step T2a][Remove Background]" --check_btable=1 --record_odf=1'
+                try:
+                    subprocess.run(command, shell=True, check=True)
+                    print(Fore.GREEN + Style.BRIGHT + f"Reconstruction process completed for {base_name}" + Style.RESET_ALL)
+                    files_processed += 1
+                except subprocess.CalledProcessError as e:
+                    print(Fore.RED + Style.BRIGHT + f"Error processing {base_name}: {e}" + Style.RESET_ALL)
+
+    return files_processed
+
