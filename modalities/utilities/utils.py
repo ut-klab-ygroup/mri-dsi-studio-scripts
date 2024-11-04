@@ -114,7 +114,7 @@ def get_user_confirmation(): # This function needs to be updated
 
 
 
-def load_subjects_from_excel(excel_file):
+def load_subjects_from_excel(excel_file): # TODO: delete this function since it is integrated in main pipline by few lines of code
     """
     Load subjects from the Excel file, filter by the 'Include' column.
 
